@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'ru.webdevpet.server.wrapper'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+dependencies {
+
+    implementation 'org.java-websocket:Java-WebSocket:1.5.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    archiveBaseName.set('wrapper')  // Установим имя для итогового JAR
+    archiveClassifier.set('')  // Укажем суффикс для jar
+    archiveVersion.set('1.0')  // Указание версии
+
+    // Добавление манифеста с Main-Class
+    manifest {
+        attributes(
+                'Main-Class': 'ru.webdevpet.server.wrapper.Main'  // Указываем главный класс
+        )
+    }
+}
